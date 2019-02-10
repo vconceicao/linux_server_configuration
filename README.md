@@ -4,28 +4,6 @@ By Vinicius Conceição.
 
 You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers.
 
-# IP Address
-- Public ip: 3.93.89.197
-
-# Web Application URL
-- http://3.93.89.197.xip.io/catalog
-
-# Softwares Installed
-
-- Apache 2
-- PostgreSQL 
-- finger — user information lookup program
-- Git
-- libapache2-mod-wsgi
-
-
-# Summary of Configurations
-# Catalog App #
-
-By Vinicius Conceição.
-
-You will take a baseline installation of a Linux distribution on a virtual machine and prepare it to host your web applications, to include installing updates, securing it from a number of attack vectors and installing/configuring web and database servers.
-
 # IP Address and SSH PORT
 - Public ip: 3.93.89.197
 - SSH PORT : 2200
@@ -44,7 +22,7 @@ You will take a baseline installation of a Linux distribution on a virtual machi
 
 # Summary of Configurations
 
-Update all currently installed packges
+Update all currently installed packages  
 ```
 sudo apt-get update
 sudo apt-get dist-upgrade
@@ -52,14 +30,14 @@ sudo shutdown -r now
 ```
 Change the SSH port from 22 to 2200. Make sure to configure the Lightsail firewall to allow it.
 
-`sudo vi /etc/ssh/sshd_config`
-Search for the line:
-#Port 22
-Remove # and change 22 for 2200.
-Restart the service:
-`service sshd restart`
+`sudo vi /etc/ssh/sshd_config`  
+Search for the line:  
+#Port 22  
+Remove # and change 22 for 2200.  
+Restart the service:  
+`service sshd restart`  
 
-Configure the Linux Firewall UFW to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).
+Configure the Linux Firewall UFW to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123).  
 ```
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
@@ -68,48 +46,48 @@ sudo ufw allow www
 sudo ufw allow 123/tcp
 ```
 ## Access and SSH keys
-Create a new user account named grader.
-`sudo useradd grader`
-Create a file name grader in the etc/sudoers.d
-`sudo touch /etc/sudooers.d/grader`
-Edit the file created and insert the following info:
-`grader ALL=(ALL) NOPASSWD:ALL`
+Create a new user account named grader.  
+`sudo useradd grader`  
+Create a file name grader in the etc/sudoers.d  
+`sudo touch /etc/sudooers.d/grader`  
+Edit the file created and insert the following info:  
+`grader ALL=(ALL) NOPASSWD:ALL`  
 
-Create a new ssh key-pair for the server in https://lightsail.aws.amazon.com/ls/webapp/account/keys named grader-keypair
-Download the key file to your machine 'grader_keypair.pem'
-Use Puttygen to generate the public and the private key.
-Save the private key in a safe place.
+Create a new ssh key-pair for the server in https://lightsail.aws.amazon.com/ls/webapp/account/keys named grader-keypair  
+Download the key file to your machine 'grader_keypair.pem'  
+Use Puttygen to generate the public and the private key.  
+Save the private key in a safe place.  
 
-Logged at the server 
-- Create a new file and name it as authorized_keys. 
-	`touch /home/grader/.ssh/authorized_keys`
-- Copy the content of the generated public key in your local machine
-- Paste the the content of the generated public key at authorized_keys file in the server
-`nano home/grader/.ssh/authorized_keys`
+Logged at the server   
+- Create a new file and name it as authorized_keys.   
+	`touch /home/grader/.ssh/authorized_keys`  
+- Copy the content of the generated public key in your local machine  
+- Paste the the content of the generated public key at authorized_keys file in the server  
+`nano home/grader/.ssh/authorized_keys`  
 
-At your machine, you can PUTTY or another tool to log in the with private key that was generated from the PUTTYgen
+At your machine, you can PUTTY or another tool to log in the with private key that was generated from the PUTTYgen  
 
+## Web Server and DB Configuration
+Configure localtimezone to UTC  
+`sudo dpkg-reconfigure tzdata`  
 
-Configure localtimezone to UTC
-`sudo dpkg-reconfigure tzdata`
-
-Install and configure Apache to serve a Python mod_wsgi application.
+Install and configure Apache to serve a Python mod_wsgi application.  
 ```
 sudo apt-get install apache2
 sudo apt-get install libapache2-mod-wsgi
 ```
  
-Install and configure PostgreSQL:
-`sudo apt-get install postgresql`
-After installing PostgreSQL database server, remote access mode is disabled by default for security reasons. 
-Double checked configurations to not allow remote connections in the database
-`sudo nano /etc/postgresql/9.1/main/pg_hba.conf`
-Create a new database user named catalog that has limited permissions to your catalog application database.
+Install and configure PostgreSQL:  
+`sudo apt-get install postgresql`  
+After installing PostgreSQL database server, remote access mode is disabled by default for security reasons.   
+Double checked configurations to not allow remote connections in the database  
+`sudo nano /etc/postgresql/9.1/main/pg_hba.conf`  
+Create a new database user named catalog that has limited permissions to your catalog application database.  
 
-postgres=# `CREATE ROLE catalog WITH LOGIN PASSWORD 'catalog';`
-postgres=# `ALTER ROLE catalog CREATEDB;`
+postgres=# `CREATE ROLE catalog WITH LOGIN PASSWORD 'catalog';`  
+postgres=# `ALTER ROLE catalog CREATEDB;`  
 
-Database 'catalogdb' created
+Database 'catalogdb' created  
 
   ```
  List of databases
@@ -190,9 +168,9 @@ http://3.93.89.197.xip.io/catalog
 
 # Third Party Resources
 
-https://www.a2hosting.com/kb/developer-corner/postgresql/managing-postgresql-databases-and-users-from-the-command-line
-http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
-https://docs.sqlalchemy.org/en/latest/core/engines.html#postgresql
-https://stackoverflow.com/questions/5682809/django-static-file-hosting-an-apache
-https://github.com/bencam/linux-server-configuration
-https://www.digitalocean.com/community/tutorials/how-to-create-ssh-keys-with-putty-to-connect-to-a-vps
+- https://www.a2hosting.com/kb/developer-corner/postgresql/managing-postgresql-databases-and-users-from-the-command-line
+- http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
+- https://docs.sqlalchemy.org/en/latest/core/engines.html#postgresql
+- https://stackoverflow.com/questions/5682809/django-static-file-hosting-an-apache
+- https://github.com/bencam/linux-server-configuration
+- https://www.digitalocean.com/community/tutorials/how-to-create-ssh-keys-with-putty-to-connect-to-a-vps
