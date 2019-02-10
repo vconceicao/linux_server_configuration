@@ -135,7 +135,6 @@ Create tables for catalogdb
 - Create `/var/www/catalog/catalog.wsgi` file add the following lines:
 
 ```
-#!/usr/bin/python
 import sys
 sys.path.insert(0, "/var/www/catalog/catalog_app/")
 sys.path.insert(1, "/var/www/catalog/")
