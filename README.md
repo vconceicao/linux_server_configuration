@@ -53,9 +53,9 @@ Create a file name grader in the etc/sudoers.d
 Edit the file created and insert the following info:  
 `grader ALL=(ALL) NOPASSWD:ALL`  
 
-Create a new ssh key-pair for the server in https://lightsail.aws.amazon.com/ls/webapp/account/keys named grader-keypair  
+Create a new SSH key-pair for the server in https://lightsail.aws.amazon.com/ls/webapp/account/keys named grader-keypair  
 Download the key file to your machine 'grader_keypair.pem'  
-Use Puttygen to generate the public and the private key.  
+Use PUTTYgen to generate the public and the private key.  
 Save the private key in a safe place.  
 
 Logged at the server   
@@ -65,7 +65,7 @@ Logged at the server
 - Paste the the content of the generated public key at authorized_keys file in the server  
 `nano home/grader/.ssh/authorized_keys`  
 
-At your machine, you can PUTTY or another tool to log in the with private key that was generated from the PUTTYgen  
+At your machine, you can use PUTTY or another tool to login at the server with the private key that was generated from the PUTTYgen  
 
 ## Web Server and DB Configuration
 Configure localtimezone to UTC  
@@ -80,12 +80,12 @@ sudo apt-get install libapache2-mod-wsgi
 Install and configure PostgreSQL:  
 `sudo apt-get install postgresql`  
 After installing PostgreSQL database server, remote access mode is disabled by default for security reasons.   
-Double checked configurations to not allow remote connections in the database  
-`sudo nano /etc/postgresql/9.1/main/pg_hba.conf`  
-Create a new database user named catalog that has limited permissions to your catalog application database.  
+It's better double check the configurations to not allow any remote connections in the database  
+`sudo nano /etc/postgresql/9.1/main/pg_hba.conf`    
 
-postgres=# `CREATE ROLE catalog WITH LOGIN PASSWORD 'catalog';`  
-postgres=# `ALTER ROLE catalog CREATEDB;`  
+Create a new database user named catalog that has limited permissions to your catalog application database.  
+postgres=# `CREATE ROLE catalog WITH LOGIN PASSWORD 'catalog';`   
+postgres=# `ALTER ROLE catalog CREATEDB;`    
 
 Database 'catalogdb' created  
 
@@ -102,9 +102,9 @@ Database 'catalogdb' created
 (4 rows)
 
  ```
- 
- Clone and setup the Item Catalog project from the GitHub repository 
-- Install Git
+ ### Apache and Application Configuration
+
+- While logged as `grader` install Git
 - Create `/var/www/catalog/` directory.
 - Change to that directory and clone the catalog project:
 `sudo git clone https://github.com/vconceicao/catalog_app.git.`
