@@ -124,7 +124,7 @@ sudo pip install flask
 sudo pip install psycopg2
 ```
 
-Change the string connection to use postgres db in `/var/www/catalog/catalog_app/ database_setup.py`
+Change the string connection to use postgres db
 ```
 engine = create_engine('postgresql://catalog:123@localhost/catalogdb')
 ```
